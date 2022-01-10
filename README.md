@@ -3,3 +3,4 @@ GOAP AI (Goal Oriented Action Planning Artificial Intelligence) project. Using U
 
 Using:
 https://github.com/sschmid/Entitas-CSharp
+https://github.com/dbrizov/NaughtyAttributes
