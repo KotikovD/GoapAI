@@ -1,0 +1,60 @@
+{
+    "name": "InputControls",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "cd5cfaa9-ecfb-4312-add1-ef1c65cfa500",
+            "actions": [
+                {
+                    "name": "Choose",
+                    "type": "Button",
+                    "id": "1f424c63-1bdd-4d74-ab6a-9232d7483e56",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ClearUi",
+                    "type": "Button",
+                    "id": "fd9ddd9c-e743-4135-9af3-0e59af933f07",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "637c3fdb-e686-434c-9bc4-a79673275b98",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Choose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a95977f7-d14f-44c5-a82f-05a961a6619a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "ClearUi",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": []
+        }
+    ]
+}

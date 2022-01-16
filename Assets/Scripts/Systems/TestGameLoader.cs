@@ -86,7 +86,6 @@ public class TestGameLoader : IGameLoader
                     {ResourceType.Stone, 10}
                 };
                 workerEntity.AddResourceItem(startResources);
-                // workerEntity.agentInventory.Inventory.AddItem(ResourceType.Wood, new RepositoryItem(50, () => worker.transform.position));}
             }
 
             entity.Link(workerEntity);

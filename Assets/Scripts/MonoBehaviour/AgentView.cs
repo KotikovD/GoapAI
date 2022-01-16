@@ -2,12 +2,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public sealed class AgentView : MonoBehaviour
+public sealed class AgentView : CommonView
 {
     [SerializeField] private NavMeshAgent _navMeshAgent;
-    
 
+    
      public IEnumerator Move(Vector3 destinationPoint)
      {
          _navMeshAgent.SetDestination(destinationPoint);

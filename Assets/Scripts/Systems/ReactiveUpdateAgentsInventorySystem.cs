@@ -31,7 +31,6 @@ public sealed class ReactiveUpdateAgentsInventorySystem : ReactiveSystem<GameEnt
             }
 
             entity.RemoveResourceItem();
-            entity.isNeedUpdateGameUi = true; 
         }
     }
 }

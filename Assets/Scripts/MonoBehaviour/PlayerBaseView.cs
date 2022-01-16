@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class PlayerBaseView : MonoBehaviour
+public sealed class PlayerBaseView : CommonView
 {
     [SerializeField] private Transform _interactionPoint;
 

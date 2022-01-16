@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         _contexts = new Contexts();
-        _gameSystems = new GameSystems(_contexts.game);
+        _gameSystems = new GameSystems(_contexts);
         _gameSystems.Initialize();
     }
 

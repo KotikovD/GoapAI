@@ -18,6 +18,6 @@ public class InitializeGameUiSystem : IInitializeSystem
         var entity = _context.CreateEntity();
         entity.AddGameUi(view);
         viewLink.Link(entity);
-        entity.gameUi.View.SetInventoryText("");
+        entity.gameUi.View.ClearAllUi();
     }
 }

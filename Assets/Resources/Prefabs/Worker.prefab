@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7726432486002397573}
   - component: {fileID: 1054234730268985384}
   - component: {fileID: 1633700276518835395}
-  m_Layer: 0
+  - component: {fileID: 292099311693270551}
+  m_Layer: 14
   m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,6 +83,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7726432486002397573}
+--- !u!136 &292099311693270551
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751650371438572139}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.28
+  m_Height: 1.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &2877979182434672961
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +110,7 @@ GameObject:
   - component: {fileID: 1643416235267513121}
   - component: {fileID: 1317519758828150227}
   - component: {fileID: 1989642114156237687}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Icosphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2588,7 +2603,7 @@ GameObject:
   - component: {fileID: 8379075688058913650}
   - component: {fileID: 65080533176529781}
   - component: {fileID: 6530129027508593522}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

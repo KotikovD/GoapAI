@@ -20,5 +20,18 @@ public class GameUiView : MonoBehaviour
     {
         _agentText.text = text;
     }
+
+    public void ClearAgentView()
+    {
+        SetAgentText("");
+    }  
+    
+    public void ClearAllUi()
+    {
+        SetAgentText("");
+        SetInventoryText("");
+    }
+    
+    
     
 }
