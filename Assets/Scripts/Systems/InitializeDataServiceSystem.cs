@@ -4,9 +4,9 @@ public class InitializeDataServiceSystem : IInitializeSystem
 {
     private readonly GameContext _context;
 
-    public InitializeDataServiceSystem(Contexts context)
+    public InitializeDataServiceSystem(GameContext context)
     {
-        _context = context.game;
+        _context = context;
     }
 
     public void Initialize()

@@ -1,14 +1,17 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Unity;
 using UnityEngine;
 
 
+
+
+
 public class TestGameLoader : IGameLoader
 {
-    private readonly Contexts _context;
+    private readonly GameContext _context;
 
-    public TestGameLoader(Contexts context)
+    public TestGameLoader(GameContext context)
     {
         _context = context;
     }
@@ -25,25 +28,31 @@ public class TestGameLoader : IGameLoader
     {
         InitUnits();
         InitGameResources();
-        var baseView = InitPlayerBuildings();
-        InitWorldInventory(baseView);
+        InitPlayerBuildings();
+        InitWorldInventory();
     }
 
-    private void InitWorldInventory(PlayerBaseView baseView)
+    private void InitWorldInventory()
     {
-        var worldInventory = _context.game.CreateEntity();
+        var worldInventory = _context.CreateEntity();
         worldInventory.AddWorldInventory(new Repository<ResourceType>());
-        worldInventory.worldInventory.Inventory.AddItem(ResourceType.Wood, new RepositoryItem(100, () => baseView.InteractionPoint));
+
+        var startResources = new Dictionary<ResourceType, int>()
+        {
+            {ResourceType.Wood, 100},
+            {ResourceType.Stone, 50}
+        };
+        
+        worldInventory.AddResourceItem(startResources);
     }
 
-    private PlayerBaseView InitPlayerBuildings()
+    private void InitPlayerBuildings()
     {
         var baseView = GameObject.FindObjectOfType<PlayerBaseView>();
         var baseLink = baseView.GetComponent<EntityLink>();
-        var baseEntity = _context.game.CreateEntity();
-        baseEntity.isPlayerBase = true;
+        var baseEntity = _context.CreateEntity();
+        baseEntity.AddPlayerBase(baseView);
         baseLink.Link(baseEntity);
-        return baseView;
     }
 
     private void InitGameResources()
@@ -52,7 +61,7 @@ public class TestGameLoader : IGameLoader
         foreach (var tree in trees)
         {
             var entity = tree.GetComponent<EntityLink>();
-            var treeEntity = _context.game.CreateEntity();
+            var treeEntity = _context.CreateEntity();
             //treeEntity.Add
 
             entity.Link(treeEntity);
@@ -61,17 +70,25 @@ public class TestGameLoader : IGameLoader
 
     private void InitUnits()
     {
-        var workers = GameObject.FindObjectsOfType<WorkerView>();
+        var workers = GameObject.FindObjectsOfType<AgentView>();
         foreach (var worker in workers)
         {
             var entity = worker.GetComponent<EntityLink>();
-            var workerEntity = _context.game.CreateEntity();
-            workerEntity.isAgent = true;
+            var workerEntity = _context.CreateEntity();
+            workerEntity.AddAgent(worker);
             workerEntity.AddAgentInventory(new Repository<ResourceType>());
-           
+
             if (workers.Length > 1 && workers.First().Equals(worker))
-                workerEntity.agentInventory.Inventory.AddItem(ResourceType.Wood, new RepositoryItem(50, () => worker.transform.position));
-            
+            {
+                var startResources = new Dictionary<ResourceType, int>()
+                {
+                    {ResourceType.Wood, 20},
+                    {ResourceType.Stone, 10}
+                };
+                workerEntity.AddResourceItem(startResources);
+                // workerEntity.agentInventory.Inventory.AddItem(ResourceType.Wood, new RepositoryItem(50, () => worker.transform.position));}
+            }
+
             entity.Link(workerEntity);
         }
         

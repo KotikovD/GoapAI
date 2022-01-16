@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class ConstantsData : ScriptableObject
 {
     [Header("Constants")]
-    [SerializeField] private float test = 0.15f;
+    [SerializeField] private LoadType _loadType = LoadType.Testing;
     
-    public float Test => test;
+    public LoadType LoadType => _loadType;
 }

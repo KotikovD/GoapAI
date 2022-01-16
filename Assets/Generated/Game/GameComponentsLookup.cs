@@ -11,24 +11,33 @@ public static class GameComponentsLookup {
     public const int Agent = 0;
     public const int AgentInventory = 1;
     public const int DataService = 2;
-    public const int PlayerBase = 3;
-    public const int WorldInventory = 4;
+    public const int GameUi = 3;
+    public const int NeedUpdateGameUi = 4;
+    public const int PlayerBase = 5;
+    public const int ResourceItem = 6;
+    public const int WorldInventory = 7;
 
-    public const int TotalComponents = 5;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "Agent",
         "AgentInventory",
         "DataService",
+        "GameUi",
+        "NeedUpdateGameUi",
         "PlayerBase",
+        "ResourceItem",
         "WorldInventory"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Agent),
+        typeof(AgentComponent),
         typeof(AgentInventoryComponent),
         typeof(DataServiceComponent),
+        typeof(GameUiComponent),
+        typeof(NeedUpdateGameUiComponent),
         typeof(PlayerBaseComponent),
+        typeof(ResourceItem),
         typeof(WorldInventoryComponent)
     };
 }

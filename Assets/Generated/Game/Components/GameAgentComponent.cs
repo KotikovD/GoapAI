@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly Agent agentComponent = new Agent();
+    public AgentComponent agent { get { return (AgentComponent)GetComponent(GameComponentsLookup.Agent); } }
+    public bool hasAgent { get { return HasComponent(GameComponentsLookup.Agent); } }
 
-    public bool isAgent {
-        get { return HasComponent(GameComponentsLookup.Agent); }
-        set {
-            if (value != isAgent) {
-                var index = GameComponentsLookup.Agent;
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : agentComponent;
+    public void AddAgent(AgentView newAgentView) {
+        var index = GameComponentsLookup.Agent;
+        var component = (AgentComponent)CreateComponent(index, typeof(AgentComponent));
+        component.AgentView = newAgentView;
+        AddComponent(index, component);
+    }
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
-            }
-        }
+    public void ReplaceAgent(AgentView newAgentView) {
+        var index = GameComponentsLookup.Agent;
+        var component = (AgentComponent)CreateComponent(index, typeof(AgentComponent));
+        component.AgentView = newAgentView;
+        ReplaceComponent(index, component);
+    }
+
+    public void RemoveAgent() {
+        RemoveComponent(GameComponentsLookup.Agent);
     }
 }
 

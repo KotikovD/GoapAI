@@ -38,5 +38,13 @@ public sealed class Repository<TEnum> : IRepository<TEnum> where TEnum : System.
             
         return result;
     }
-        
+
+    public string GetTotalAmountString()
+    {
+        var resultString = string.Empty;
+        foreach (var resource in _items)
+            resultString += resource.Key + " - " + resource.Value.TotalAmount + "\n";
+
+        return string.IsNullOrEmpty(resultString) ? "Empty" : resultString;
+    }
 }

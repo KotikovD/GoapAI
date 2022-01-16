@@ -9,19 +9,30 @@
 public partial class GameContext {
 
     public GameEntity playerBaseEntity { get { return GetGroup(GameMatcher.PlayerBase).GetSingleEntity(); } }
+    public PlayerBaseComponent playerBase { get { return playerBaseEntity.playerBase; } }
+    public bool hasPlayerBase { get { return playerBaseEntity != null; } }
 
-    public bool isPlayerBase {
-        get { return playerBaseEntity != null; }
-        set {
-            var entity = playerBaseEntity;
-            if (value != (entity != null)) {
-                if (value) {
-                    CreateEntity().isPlayerBase = true;
-                } else {
-                    entity.Destroy();
-                }
-            }
+    public GameEntity SetPlayerBase(PlayerBaseView newPlayerBaseView) {
+        if (hasPlayerBase) {
+            throw new Entitas.EntitasException("Could not set PlayerBase!\n" + this + " already has an entity with PlayerBaseComponent!",
+                "You should check if the context already has a playerBaseEntity before setting it or use context.ReplacePlayerBase().");
         }
+        var entity = CreateEntity();
+        entity.AddPlayerBase(newPlayerBaseView);
+        return entity;
+    }
+
+    public void ReplacePlayerBase(PlayerBaseView newPlayerBaseView) {
+        var entity = playerBaseEntity;
+        if (entity == null) {
+            entity = SetPlayerBase(newPlayerBaseView);
+        } else {
+            entity.ReplacePlayerBase(newPlayerBaseView);
+        }
+    }
+
+    public void RemovePlayerBase() {
+        playerBaseEntity.Destroy();
     }
 }
 
@@ -35,25 +46,25 @@ public partial class GameContext {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly PlayerBaseComponent playerBaseComponent = new PlayerBaseComponent();
+    public PlayerBaseComponent playerBase { get { return (PlayerBaseComponent)GetComponent(GameComponentsLookup.PlayerBase); } }
+    public bool hasPlayerBase { get { return HasComponent(GameComponentsLookup.PlayerBase); } }
 
-    public bool isPlayerBase {
-        get { return HasComponent(GameComponentsLookup.PlayerBase); }
-        set {
-            if (value != isPlayerBase) {
-                var index = GameComponentsLookup.PlayerBase;
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : playerBaseComponent;
+    public void AddPlayerBase(PlayerBaseView newPlayerBaseView) {
+        var index = GameComponentsLookup.PlayerBase;
+        var component = (PlayerBaseComponent)CreateComponent(index, typeof(PlayerBaseComponent));
+        component.PlayerBaseView = newPlayerBaseView;
+        AddComponent(index, component);
+    }
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
-            }
-        }
+    public void ReplacePlayerBase(PlayerBaseView newPlayerBaseView) {
+        var index = GameComponentsLookup.PlayerBase;
+        var component = (PlayerBaseComponent)CreateComponent(index, typeof(PlayerBaseComponent));
+        component.PlayerBaseView = newPlayerBaseView;
+        ReplaceComponent(index, component);
+    }
+
+    public void RemovePlayerBase() {
+        RemoveComponent(GameComponentsLookup.PlayerBase);
     }
 }
 
