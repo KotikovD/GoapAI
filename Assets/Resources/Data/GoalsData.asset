@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81823601e1394a3c8ad2265b5a36ab8c, type: 3}
   m_Name: GoalsData
   m_EditorClassIdentifier: 
-  _goals: []
+  _goals:
+  - _goalName: 1
+    _state: 2
+    _importance: 1
+  - _goalName: 2
+    _state: 2
+    _importance: 2
+  - _goalName: 3
+    _state: 2
+    _importance: 0

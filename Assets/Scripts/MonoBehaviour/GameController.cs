@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
         _contexts = new Contexts();
         _gameSystems = new GameSystems(_contexts);
         _gameSystems.Initialize();
+        
+        var r = new GoapAgentsController(_contexts.game);
     }
 
     private void Update()

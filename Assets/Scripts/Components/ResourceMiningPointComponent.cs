@@ -4,6 +4,6 @@ using Entitas;
 public sealed class ResourceMiningComponent : IComponent
 {
     public float ActionIntervalDelay;
-    public int ResourceCountPerInterval;
+    public ushort ResourceCountPerInterval;
     public ResourceType RequirementsForInteraction;
 }

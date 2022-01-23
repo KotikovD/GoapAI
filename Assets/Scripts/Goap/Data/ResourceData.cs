@@ -8,8 +8,8 @@ namespace Data
     {
         public ResourceType resourceType = ResourceType.Wood;
         public float actionIntervalDelay = 1f;
-        public int resourceCountPerInterval = 5;
-        public int resourceAmount = 100;
+        public ushort resourceCountPerInterval = 5;
+        public ushort resourceAmount = 100;
         public ResourceType requirementsForInteraction = ResourceType.Axe;
     }
 }

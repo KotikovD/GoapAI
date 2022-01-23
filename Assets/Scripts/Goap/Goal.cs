@@ -11,4 +11,8 @@
         _state = state;
         _importance = importance;
     }
+
+    public GoalName GoalName => _goalName;
+    public WorldState State => _state;
+    public int Importance => _importance;
 }

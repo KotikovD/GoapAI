@@ -11,7 +11,7 @@ public partial class GameEntity {
     public ResourceMiningComponent resourceMining { get { return (ResourceMiningComponent)GetComponent(GameComponentsLookup.ResourceMining); } }
     public bool hasResourceMining { get { return HasComponent(GameComponentsLookup.ResourceMining); } }
 
-    public void AddResourceMining(float newActionIntervalDelay, int newResourceCountPerInterval, ResourceType newRequirementsForInteraction) {
+    public void AddResourceMining(float newActionIntervalDelay, ushort newResourceCountPerInterval, ResourceType newRequirementsForInteraction) {
         var index = GameComponentsLookup.ResourceMining;
         var component = (ResourceMiningComponent)CreateComponent(index, typeof(ResourceMiningComponent));
         component.ActionIntervalDelay = newActionIntervalDelay;
@@ -20,7 +20,7 @@ public partial class GameEntity {
         AddComponent(index, component);
     }
 
-    public void ReplaceResourceMining(float newActionIntervalDelay, int newResourceCountPerInterval, ResourceType newRequirementsForInteraction) {
+    public void ReplaceResourceMining(float newActionIntervalDelay, ushort newResourceCountPerInterval, ResourceType newRequirementsForInteraction) {
         var index = GameComponentsLookup.ResourceMining;
         var component = (ResourceMiningComponent)CreateComponent(index, typeof(ResourceMiningComponent));
         component.ActionIntervalDelay = newActionIntervalDelay;
