@@ -9,6 +9,7 @@ public sealed class ConstantsData : ScriptableObject
 {
     [Header("Constants")]
     [SerializeField] private LoadType _loadType = LoadType.Testing;
+    [SerializeField] private WorldState _worldState = WorldState.Development;
     [SerializeField] private float _clickAreaErrorTolerance = 0.5f;
     [SerializeField] private int _agentMaxResourceCapacity = 100;
 
@@ -17,6 +18,7 @@ public sealed class ConstantsData : ScriptableObject
     
     
     public LoadType LoadType => _loadType;
+    public WorldState WorldState => _worldState;
     public float ClickAreaErrorTolerance => _clickAreaErrorTolerance;
     public int AgentMaxResourceCapacity => _agentMaxResourceCapacity;
     
@@ -25,7 +27,7 @@ public sealed class ConstantsData : ScriptableObject
     {
         var foundRes = _configs.Find(x => x.resourceType == resourceType);
         if (foundRes == null)
-            throw new Exception(resourceType + " hasn't setuped");
+            throw new Exception("ResourceType = " + resourceType + " didn't setuped");
 
         return foundRes;
 

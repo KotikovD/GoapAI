@@ -10,7 +10,6 @@ namespace Data
         public float actionIntervalDelay = 1f;
         public int resourceCountPerInterval = 5;
         public int resourceAmount = 100;
-        public ResourcePlace resourcePlace = ResourcePlace.MiningLocation;
         public ResourceType requirementsForInteraction = ResourceType.Axe;
     }
 }
