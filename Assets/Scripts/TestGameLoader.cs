@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Unity;
@@ -18,13 +19,13 @@ public class TestGameLoader : IGameLoader
     
     public void Load()
     {
-        CreateTestData();
+        InitTestSceneWithTestData();
     }
 
     /// <summary>
     /// Method works with test scene only
     /// </summary>
-    private void CreateTestData()
+    private void InitTestSceneWithTestData()
     {
         InitUnits();
         InitGameResources();
@@ -35,7 +36,7 @@ public class TestGameLoader : IGameLoader
     private void InitWorldInventory()
     {
         var worldInventory = _context.CreateEntity();
-        worldInventory.AddWorldInventory(new Repository<ResourceType>());
+        worldInventory.AddWorldInventory(new WorldInventoryFacade());
 
         var startResources = new Dictionary<ResourceType, int>()
         {
@@ -43,7 +44,7 @@ public class TestGameLoader : IGameLoader
             {ResourceType.Stone, 50}
         };
         
-        worldInventory.AddResourceItem(startResources);
+        worldInventory.AddResourceSetter(startResources);
     }
 
     private void InitPlayerBuildings()
@@ -60,10 +61,21 @@ public class TestGameLoader : IGameLoader
         var trees = GameObject.FindObjectsOfType<TreeView>();
         foreach (var tree in trees)
         {
+            var woodSetupData = _context.dataService.value.Constants.GetResourceConfig(ResourceType.Wood);
             var entity = tree.GetComponent<EntityLink>();
             var treeEntity = _context.CreateEntity();
-            //treeEntity.Add
+            treeEntity.AddCommonView(tree.CommonView);
+            treeEntity.AddCommonInventory(new CommonInventoryFacade(), Int32.MaxValue);
+            
+            var miningResource = new Dictionary<ResourceType, int>() {{woodSetupData.resourceType, woodSetupData.resourceAmount}};
+            treeEntity.AddResourceSetter(miningResource);
+            
+            treeEntity.AddResourceMining(
+                woodSetupData.actionIntervalDelay, 
+                woodSetupData.resourceCountPerInterval,
+                woodSetupData.requirementsForInteraction);
 
+            treeEntity.isFreeInteractionPoint = true;
             entity.Link(treeEntity);
         }
     }
@@ -76,7 +88,9 @@ public class TestGameLoader : IGameLoader
             var entity = worker.GetComponent<EntityLink>();
             var workerEntity = _context.CreateEntity();
             workerEntity.AddAgent(worker);
-            workerEntity.AddAgentInventory(new Repository<ResourceType>());
+            workerEntity.AddCommonView(worker.CommonView);
+            var maxCapacity = _context.dataService.value.Constants.AgentMaxResourceCapacity;
+            workerEntity.AddCommonInventory(new CommonInventoryFacade(), maxCapacity);
 
             if (workers.Length > 1 && workers.First().Equals(worker))
             {
@@ -85,7 +99,7 @@ public class TestGameLoader : IGameLoader
                     {ResourceType.Wood, 20},
                     {ResourceType.Stone, 10}
                 };
-                workerEntity.AddResourceItem(startResources);
+                workerEntity.AddResourceSetter(startResources);
             }
 
             entity.Link(workerEntity);

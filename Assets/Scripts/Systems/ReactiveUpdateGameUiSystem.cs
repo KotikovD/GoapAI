@@ -24,17 +24,17 @@ public class ReactiveUpdateGameUiSystem : ReactiveSystem<GameEntity>
     protected override void Execute(List<GameEntity> entities)
     {
         UpdateInventoryUi(entities);
-        UpdateAgentUi(entities);
+        UpdateCommonInventory(entities);
     }
 
-    private void UpdateAgentUi(List<GameEntity> entities)
+    private void UpdateCommonInventory(List<GameEntity> entities)
     {
-        var agentToUpdate = entities.FirstOrDefault(x => x.hasAgent && x.isNeedUpdateGameUi);
+        var agentToUpdate = entities.FirstOrDefault(x => x.hasCommonInventory && x.isNeedUpdateGameUi);
         if (agentToUpdate == null)
             return;
 
         agentToUpdate.isNeedUpdateGameUi = false;
-        var newText = agentToUpdate.agentInventory.Inventory.GetTotalAmountString();
+        var newText = agentToUpdate.commonInventory.Inventory.GetTotalAmountString();
         _context.gameUi.View.SetAgentText(newText);
     }
 

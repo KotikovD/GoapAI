@@ -15,7 +15,8 @@
         
         //Reactive
         Add(new ReactiveUpdateWorldInventorySystem(gameContext));
-        Add(new ReactiveUpdateAgentsInventorySystem(gameContext));
+        Add(new ReactiveRemoveResourceCommonInventoriesSystem(gameContext));
+        Add(new ReactiveAddResourceCommonInventoriesSystem(gameContext));
         Add(new ReactiveUpdateGameUiSystem(gameContext));
         
     }

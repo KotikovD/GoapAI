@@ -12,7 +12,7 @@ public partial class GameContext {
     public WorldInventoryComponent worldInventory { get { return worldInventoryEntity.worldInventory; } }
     public bool hasWorldInventory { get { return worldInventoryEntity != null; } }
 
-    public GameEntity SetWorldInventory(IRepository<ResourceType> newInventory) {
+    public GameEntity SetWorldInventory(WorldInventoryFacade newInventory) {
         if (hasWorldInventory) {
             throw new Entitas.EntitasException("Could not set WorldInventory!\n" + this + " already has an entity with WorldInventoryComponent!",
                 "You should check if the context already has a worldInventoryEntity before setting it or use context.ReplaceWorldInventory().");
@@ -22,7 +22,7 @@ public partial class GameContext {
         return entity;
     }
 
-    public void ReplaceWorldInventory(IRepository<ResourceType> newInventory) {
+    public void ReplaceWorldInventory(WorldInventoryFacade newInventory) {
         var entity = worldInventoryEntity;
         if (entity == null) {
             entity = SetWorldInventory(newInventory);
@@ -49,14 +49,14 @@ public partial class GameEntity {
     public WorldInventoryComponent worldInventory { get { return (WorldInventoryComponent)GetComponent(GameComponentsLookup.WorldInventory); } }
     public bool hasWorldInventory { get { return HasComponent(GameComponentsLookup.WorldInventory); } }
 
-    public void AddWorldInventory(IRepository<ResourceType> newInventory) {
+    public void AddWorldInventory(WorldInventoryFacade newInventory) {
         var index = GameComponentsLookup.WorldInventory;
         var component = (WorldInventoryComponent)CreateComponent(index, typeof(WorldInventoryComponent));
         component.Inventory = newInventory;
         AddComponent(index, component);
     }
 
-    public void ReplaceWorldInventory(IRepository<ResourceType> newInventory) {
+    public void ReplaceWorldInventory(WorldInventoryFacade newInventory) {
         var index = GameComponentsLookup.WorldInventory;
         var component = (WorldInventoryComponent)CreateComponent(index, typeof(WorldInventoryComponent));
         component.Inventory = newInventory;

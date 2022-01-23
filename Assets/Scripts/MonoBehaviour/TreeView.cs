@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public sealed class TreeView : CommonView
+
+public sealed class TreeView : MonoBehaviourExt
 {
     [SerializeField] private Transform _interactionPoint;
 

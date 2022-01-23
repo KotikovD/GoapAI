@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InitializeGameUiSystem : IInitializeSystem
 {
-    private GameContext _context;
+    private readonly GameContext _context;
 
     public InitializeGameUiSystem(GameContext context)
     {

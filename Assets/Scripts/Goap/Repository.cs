@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public sealed class Repository<TEnum> : IRepository<TEnum> where TEnum : System.Enum
+public abstract class Repository<TEnum> : IRepository<TEnum> where TEnum : System.Enum
 {
     private readonly Dictionary<TEnum, ResourceGroup> _items = new Dictionary<TEnum, ResourceGroup>();
         
@@ -14,7 +14,7 @@ public sealed class Repository<TEnum> : IRepository<TEnum> where TEnum : System.
             _items.Add(tType, new ResourceGroup(repository));
     }
 
-    public Vector3 ShowItemNearby(TEnum tType, Vector3 position)
+    protected Vector3 ShowItemNearby(TEnum tType, Vector3 position)
     {
         return _items[tType].ShowItemNearby(position);
     }
@@ -36,6 +36,15 @@ public sealed class Repository<TEnum> : IRepository<TEnum> where TEnum : System.
         foreach (var item in _items)
             result.Add(item.Key, item.Value.TotalAmount);
             
+        return result;
+    }
+
+    public int GetBusyTotalAmount()
+    {
+        var result = 0;
+        foreach (var item in _items)
+            result += item.Value.TotalAmount;
+
         return result;
     }
 

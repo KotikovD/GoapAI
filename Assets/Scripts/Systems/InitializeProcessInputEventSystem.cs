@@ -18,23 +18,23 @@ public sealed class InitializeProcessInputEventSystem : IInitializeSystem, IInpu
 
     public void OnInputClick(GameEntity entity, Vector3 clickPoint)
     {
-        var agents = _gameContext.GetGroup(GameMatcher.AllOf(GameMatcher.Agent));
-        var isAgentFound = FindClosestAgent(clickPoint, agents, out var closestAgent);
+        var agents = _gameContext.GetGroup(GameMatcher.AllOf(GameMatcher.CommonView));
+        var isObjectFound = FindClosestObject(clickPoint, agents, out var closestObject);
 			
-        if(!isAgentFound)
+        if(!isObjectFound)
             return;
 
-        closestAgent.isNeedUpdateGameUi = true;
+        closestObject.isNeedUpdateGameUi = true;
     }
     
-    private bool FindClosestAgent(Vector3 sourceTarget, IGroup<GameEntity> entities, out GameEntity closestEntity)
+    private bool FindClosestObject(Vector3 sourceTarget, IGroup<GameEntity> entities, out GameEntity closestEntity)
     {
         var closestDistance = float.MaxValue;
         closestEntity = null;
 			
         foreach (var one in entities)
         {
-            var currentDistance = Vector3.Distance(sourceTarget, one.agent.AgentView.GetPosition);
+            var currentDistance = Vector3.Distance(sourceTarget, one.commonView.CommonView.GetPosition);
 
             if (currentDistance < _gameContext.dataService.value.Constants.ClickAreaErrorTolerance && currentDistance < closestDistance)
             {

@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public sealed class AgentView : CommonView
+
+public sealed class AgentView : MonoBehaviourExt
 {
     [SerializeField] private NavMeshAgent _navMeshAgent;
 

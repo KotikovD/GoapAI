@@ -19,8 +19,7 @@ public sealed class ResourceGroup
     {
         return _items.Any(x => x.Count >= value);
     }
-
-
+    
     public Vector3 ShowItemNearby(Vector3 position)
     {
         return _items.OrderBy(x => Vector3.Distance(position, x.GetPosition.Invoke())).First().GetPosition();
@@ -29,8 +28,13 @@ public sealed class ResourceGroup
     public IRepositoryItem GetItemNearby(int count, Vector3 position)
     {
         var foundItems = _items.FindAll(x => x.Count >= count);
+        
+        if(foundItems.Count == 0)
+             throw new Exception("You trying get more than inventory contains. Use \"HasEnoughCount\" function before");
+        
         var resultItem = foundItems.OrderBy(x => Vector3.Distance(position, x.GetPosition.Invoke())).First();
         resultItem.Count -= count;
+        
         return resultItem;
     }
         

@@ -13,24 +13,24 @@ public sealed class ReactiveUpdateWorldInventorySystem : ReactiveSystem<GameEnti
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
     {
-        return context.CreateCollector(GameMatcher.ResourceItem.Added());
+        return context.CreateCollector(GameMatcher.ResourceSetter.Added());
     }
 
     protected override bool Filter(GameEntity entity)
     {
-        return entity.hasResourceItem && entity.hasWorldInventory;
+        return entity.hasResourceSetter && entity.hasWorldInventory;
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
         var inventoryEnity = entities.First();
-        foreach (var entity in inventoryEnity.resourceItem.Items)
+        foreach (var entity in inventoryEnity.resourceSetter.Items)
         {
             var resource = new RepositoryItem(entity.Value, () => _context.playerBase.PlayerBaseView.InteractionPoint);
             _context.worldInventory.Inventory.AddItem(entity.Key, resource);
         }
         
-        inventoryEnity.RemoveResourceItem();
+        inventoryEnity.RemoveResourceSetter();
         _context.gameUiEntity.isNeedUpdateGameUi = true;
     }
 }

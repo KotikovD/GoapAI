@@ -9,47 +9,62 @@
 public static class GameComponentsLookup {
 
     public const int Agent = 0;
-    public const int AgentInventory = 1;
-    public const int Camera = 2;
-    public const int DataService = 3;
-    public const int GameUi = 4;
-    public const int InputClick = 5;
-    public const int InputClickListener = 6;
-    public const int Input = 7;
-    public const int NeedUpdateGameUi = 8;
-    public const int PlayerBase = 9;
-    public const int ResourceItem = 10;
-    public const int WorldInventory = 11;
+    public const int Camera = 1;
+    public const int CantCarryMore = 2;
+    public const int CommonInventory = 3;
+    public const int CommonView = 4;
+    public const int DataService = 5;
+    public const int FreeInteractionPoint = 6;
+    public const int GameUi = 7;
+    public const int InputClick = 8;
+    public const int InputClickListener = 9;
+    public const int Input = 10;
+    public const int NeedUpdateGameUi = 11;
+    public const int PlayerBase = 12;
+    public const int ResourceGetter = 13;
+    public const int ResourceMining = 14;
+    public const int ResourceSetter = 15;
+    public const int WorldInventory = 16;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "Agent",
-        "AgentInventory",
         "Camera",
+        "CantCarryMore",
+        "CommonInventory",
+        "CommonView",
         "DataService",
+        "FreeInteractionPoint",
         "GameUi",
         "InputClick",
         "InputClickListener",
         "Input",
         "NeedUpdateGameUi",
         "PlayerBase",
-        "ResourceItem",
+        "ResourceGetter",
+        "ResourceMining",
+        "ResourceSetter",
         "WorldInventory"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(AgentComponent),
-        typeof(AgentInventoryComponent),
         typeof(CameraComponent),
+        typeof(CantCarryMoreComponent),
+        typeof(CommonInventoryComponent),
+        typeof(CommonViewComponent),
         typeof(DataServiceComponent),
+        typeof(FreeInteractionPoint),
         typeof(GameUiComponent),
         typeof(InputClickComponent),
         typeof(InputClickListenerComponent),
         typeof(InputComponent),
         typeof(NeedUpdateGameUiComponent),
         typeof(PlayerBaseComponent),
-        typeof(ResourceItem),
+        typeof(ResourceGetterComponent),
+        typeof(ResourceMiningComponent),
+        typeof(ResourceSetterComponent),
         typeof(WorldInventoryComponent)
     };
 }

@@ -7,5 +7,6 @@ public interface IRepository<TEnum>
     bool IsEnoughItemCount(TEnum tType, int count);
     IRepositoryItem GetItemNearby(TEnum tType, int count, Vector3 position);
     Dictionary<TEnum, int> GetTotalAmount();
+    int GetBusyTotalAmount();
     string GetTotalAmountString();
 }

@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def473b3aeaf467f86100812060bd818, type: 3}
   m_Name: ConstantsData
   m_EditorClassIdentifier: 
-  test: 0.15
+  _loadType: 0
+  _clickAreaErrorTolerance: 1
+  _agentMaxResourceCapacity: 100
+  _configs:
+  - resourceType: 1
+    actionIntervalDelay: 1
+    resourceCountPerInterval: 5
+    resourceAmount: 100
+    resourcePlace: 2
+    requirementsForInteraction: 3
