@@ -36,7 +36,7 @@ public class TestGameLoader : IGameLoader
     private void InitWorldInventory()
     {
         var worldInventory = _context.CreateEntity();
-        worldInventory.AddWorldInventory(new WorldInventoryFacade());
+        worldInventory.AddWorldInventory(new WorldInventoryFacade(Int32.MaxValue));
 
         var startResources = new Dictionary<ResourceType, int>()
         {
@@ -64,13 +64,15 @@ public class TestGameLoader : IGameLoader
             var woodSetupData = _context.dataService.value.Constants.GetResourceConfig(ResourceType.Wood);
             var entity = tree.GetComponent<EntityLink>();
             var treeEntity = _context.CreateEntity();
+            treeEntity.AddTree(tree);
             treeEntity.AddCommonView(tree.CommonView);
-            treeEntity.AddCommonInventory(new CommonInventoryFacade(), Int32.MaxValue);
+            treeEntity.AddCommonInventory(new CommonInventoryFacade(Int32.MaxValue));
             
             var miningResource = new Dictionary<ResourceType, int>() {{woodSetupData.resourceType, woodSetupData.resourceAmount}};
             treeEntity.AddResourceSetter(miningResource);
             
             treeEntity.AddResourceMining(
+                woodSetupData.resourceType,
                 woodSetupData.actionIntervalDelay, 
                 woodSetupData.resourceCountPerInterval,
                 woodSetupData.requirementsForInteraction);
@@ -87,10 +89,10 @@ public class TestGameLoader : IGameLoader
         {
             var entity = worker.GetComponent<EntityLink>();
             var workerEntity = _context.CreateEntity();
-            workerEntity.AddAgent(worker);
+            workerEntity.AddAgentView(worker);
             workerEntity.AddCommonView(worker.CommonView);
             var maxCapacity = _context.dataService.value.Constants.AgentMaxResourceCapacity;
-            workerEntity.AddCommonInventory(new CommonInventoryFacade(), maxCapacity);
+            workerEntity.AddCommonInventory(new CommonInventoryFacade(maxCapacity));
 
             if (workers.Length > 1 && workers.First().Equals(worker))
             {
@@ -101,7 +103,7 @@ public class TestGameLoader : IGameLoader
                 };
                 workerEntity.AddResourceSetter(startResources);
             }
-
+            
             entity.Link(workerEntity);
         }
         

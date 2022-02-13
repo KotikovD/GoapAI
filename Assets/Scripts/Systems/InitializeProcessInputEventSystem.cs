@@ -1,5 +1,5 @@
 using Entitas;
-using UnityEngine;
+
 
 public sealed class InitializeProcessInputEventSystem : IInitializeSystem, IInputClickListener
 {
@@ -16,33 +16,9 @@ public sealed class InitializeProcessInputEventSystem : IInitializeSystem, IInpu
         _gameContext.inputEntity.AddInputClickListener(this);
     }
 
-    public void OnInputClick(GameEntity entity, Vector3 clickPoint)
+    public void OnInputClick(GameEntity entity, GameEntity clickedGameEntity)
     {
-        var agents = _gameContext.GetGroup(GameMatcher.AllOf(GameMatcher.CommonView));
-        var isObjectFound = FindClosestObject(clickPoint, agents, out var closestObject);
-			
-        if(!isObjectFound)
-            return;
-
-        closestObject.isNeedUpdateGameUi = true;
+        clickedGameEntity.isNeedUpdateGameUi = true;
     }
-    
-    private bool FindClosestObject(Vector3 sourceTarget, IGroup<GameEntity> entities, out GameEntity closestEntity)
-    {
-        var closestDistance = float.MaxValue;
-        closestEntity = null;
-			
-        foreach (var one in entities)
-        {
-            var currentDistance = Vector3.Distance(sourceTarget, one.commonView.CommonView.GetPosition);
 
-            if (currentDistance < _gameContext.dataService.value.Constants.ClickAreaErrorTolerance && currentDistance < closestDistance)
-            {
-                closestDistance = currentDistance;
-                closestEntity = one;
-            }
-        }
-
-        return closestEntity != null;
-    }
 }

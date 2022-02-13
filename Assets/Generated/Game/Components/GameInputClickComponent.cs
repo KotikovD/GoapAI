@@ -11,17 +11,17 @@ public partial class GameEntity {
     public InputClickComponent inputClick { get { return (InputClickComponent)GetComponent(GameComponentsLookup.InputClick); } }
     public bool hasInputClick { get { return HasComponent(GameComponentsLookup.InputClick); } }
 
-    public void AddInputClick(UnityEngine.Vector3 newClickPoint) {
+    public void AddInputClick(GameEntity newClickedGameEntity) {
         var index = GameComponentsLookup.InputClick;
         var component = (InputClickComponent)CreateComponent(index, typeof(InputClickComponent));
-        component.ClickPoint = newClickPoint;
+        component.ClickedGameEntity = newClickedGameEntity;
         AddComponent(index, component);
     }
 
-    public void ReplaceInputClick(UnityEngine.Vector3 newClickPoint) {
+    public void ReplaceInputClick(GameEntity newClickedGameEntity) {
         var index = GameComponentsLookup.InputClick;
         var component = (InputClickComponent)CreateComponent(index, typeof(InputClickComponent));
-        component.ClickPoint = newClickPoint;
+        component.ClickedGameEntity = newClickedGameEntity;
         ReplaceComponent(index, component);
     }
 

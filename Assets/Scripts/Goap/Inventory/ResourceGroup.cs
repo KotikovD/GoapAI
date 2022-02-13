@@ -34,8 +34,9 @@ public sealed class ResourceGroup
         
         var resultItem = foundItems.OrderBy(x => Vector3.Distance(position, x.GetPosition.Invoke())).First();
         resultItem.Count -= count;
-        
-        return resultItem;
+
+        var piece = new RepositoryItem(count, resultItem.GetPosition);
+        return piece;
     }
         
     public void AddItem(IRepositoryItem repositoryItem)

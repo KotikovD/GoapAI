@@ -11,19 +11,17 @@ public partial class GameEntity {
     public CommonInventoryComponent commonInventory { get { return (CommonInventoryComponent)GetComponent(GameComponentsLookup.CommonInventory); } }
     public bool hasCommonInventory { get { return HasComponent(GameComponentsLookup.CommonInventory); } }
 
-    public void AddCommonInventory(CommonInventoryFacade newInventory, int newMaxResourceCapacity) {
+    public void AddCommonInventory(CommonInventoryFacade newInventory) {
         var index = GameComponentsLookup.CommonInventory;
         var component = (CommonInventoryComponent)CreateComponent(index, typeof(CommonInventoryComponent));
         component.Inventory = newInventory;
-        component.MaxResourceCapacity = newMaxResourceCapacity;
         AddComponent(index, component);
     }
 
-    public void ReplaceCommonInventory(CommonInventoryFacade newInventory, int newMaxResourceCapacity) {
+    public void ReplaceCommonInventory(CommonInventoryFacade newInventory) {
         var index = GameComponentsLookup.CommonInventory;
         var component = (CommonInventoryComponent)CreateComponent(index, typeof(CommonInventoryComponent));
         component.Inventory = newInventory;
-        component.MaxResourceCapacity = newMaxResourceCapacity;
         ReplaceComponent(index, component);
     }
 

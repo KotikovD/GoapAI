@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using Entitas.Unity;
 using TMPro;
 using UnityEngine;
@@ -10,6 +8,8 @@ public class GameUiView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _inventoryText;
     [SerializeField] private TextMeshProUGUI _agentText;
+    [SerializeField] private TextMeshProUGUI _agentPlanText;
+ 
     
     public void SetInventoryText(string text)
     {
@@ -21,15 +21,27 @@ public class GameUiView : MonoBehaviour
         _agentText.text = text;
     }
 
+    public void SetAgentPlanText(string text)
+    {
+        _agentPlanText.text = text;
+    }
+    
+    public void ClearAgentPlanView()
+    {
+        SetAgentPlanText("");
+    }
+    
     public void ClearAgentView()
     {
         SetAgentText("");
+        SetAgentPlanText("");
     }  
     
     public void ClearAllUi()
     {
         SetAgentText("");
         SetInventoryText("");
+        SetAgentPlanText("");
     }
     
     

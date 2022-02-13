@@ -18,6 +18,11 @@
         Add(new ReactiveRemoveResourceCommonInventoriesSystem(gameContext));
         Add(new ReactiveAddResourceCommonInventoriesSystem(gameContext));
         Add(new ReactiveUpdateGameUiSystem(gameContext));
+       
+        //Reactive GOAP
+        Add(new ReactiveProduceTransactionsSystem(gameContext));
         
+        //Update GOAP
+        Add(new InitializeExecuteGoapSystem(gameContext));
     }
 }

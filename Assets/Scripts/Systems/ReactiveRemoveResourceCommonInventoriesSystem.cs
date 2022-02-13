@@ -27,7 +27,7 @@ public sealed class ReactiveRemoveResourceCommonInventoriesSystem : ReactiveSyst
         {
             foreach (var res in entity.resourceGetter.Items)
             {
-                entity.commonInventory.Inventory.RemoveItem(res.Key, res.Value);
+                entity.commonInventory.Inventory.RemoveResource(res.Key, res.Value);
             }
 
             entity.RemoveResourceGetter();

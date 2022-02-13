@@ -2508,6 +2508,7 @@ GameObject:
   - component: {fileID: 5459948725154535843}
   - component: {fileID: -1777747762307273077}
   - component: {fileID: 5975278810500861400}
+  - component: {fileID: 1985014044823167876}
   m_Layer: 0
   m_Name: Barn
   m_TagString: Untagged
@@ -3399,6 +3400,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e427c2347c8ef0947b598c118265a7ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionPoint: {fileID: 1277430590280417507}
+--- !u!114 &1985014044823167876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917025897339760275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a9a9150182436189be43eef6748675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interactionPoint: {fileID: 1277430590280417507}

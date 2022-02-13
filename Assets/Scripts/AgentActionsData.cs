@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = @"GameData/AgentsActionsData")]
@@ -7,10 +6,17 @@ public sealed class AgentsActionsData : ScriptableObject
 {
     [SerializeField] private List<AgentActionData> _agentsActions;
 
-
-    public AgentActionData GetData(string actionName)
+    
+    public List<AgentActionData> AgentsActions
     {
-        var actionData = _agentsActions.Find(x => String.Equals(x.ActionName, actionName, StringComparison.CurrentCultureIgnoreCase));
-        return actionData;
+        get
+        {
+            var result = new List<AgentActionData>();
+            _agentsActions.ForEach(x => result.Add(x.Clone()));
+            return result;
+        }
     }
+
+
+   
 }

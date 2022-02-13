@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1054234730268985384}
   - component: {fileID: 1633700276518835395}
   - component: {fileID: 292099311693270551}
+  - component: {fileID: 7857928197548376242}
   m_Layer: 14
   m_Name: Worker
   m_TagString: Untagged
@@ -83,6 +84,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7726432486002397573}
+  _stoppingTime: 0.1
+  _runSpeed: 2
+  _walkSpeed: 2
+  _minPathLengthForRun: 1
 --- !u!136 &292099311693270551
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -97,6 +102,19 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &7857928197548376242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751650371438572139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a9a9150182436189be43eef6748675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionPoint: {fileID: 8637372089523780111}
 --- !u!1 &2877979182434672961
 GameObject:
   m_ObjectHideFlags: 0

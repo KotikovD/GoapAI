@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goals:
   - _goalName: 1
-    _state: 2
-    _importance: 1
-  - _goalName: 2
-    _state: 2
-    _importance: 2
-  - _goalName: 3
+    _agentType: 1
     _state: 2
     _importance: 0
+  - _goalName: 2
+    _agentType: 1
+    _state: 2
+    _importance: 1
+  - _goalName: 3
+    _agentType: 1
+    _state: 2
+    _importance: 2

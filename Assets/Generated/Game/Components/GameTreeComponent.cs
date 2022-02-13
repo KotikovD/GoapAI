@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public AgentComponent agent { get { return (AgentComponent)GetComponent(GameComponentsLookup.Agent); } }
-    public bool hasAgent { get { return HasComponent(GameComponentsLookup.Agent); } }
+    public TreeComponent tree { get { return (TreeComponent)GetComponent(GameComponentsLookup.Tree); } }
+    public bool hasTree { get { return HasComponent(GameComponentsLookup.Tree); } }
 
-    public void AddAgent(AgentView newAgentView) {
-        var index = GameComponentsLookup.Agent;
-        var component = (AgentComponent)CreateComponent(index, typeof(AgentComponent));
-        component.AgentView = newAgentView;
+    public void AddTree(TreeView newTreeView) {
+        var index = GameComponentsLookup.Tree;
+        var component = (TreeComponent)CreateComponent(index, typeof(TreeComponent));
+        component.TreeView = newTreeView;
         AddComponent(index, component);
     }
 
-    public void ReplaceAgent(AgentView newAgentView) {
-        var index = GameComponentsLookup.Agent;
-        var component = (AgentComponent)CreateComponent(index, typeof(AgentComponent));
-        component.AgentView = newAgentView;
+    public void ReplaceTree(TreeView newTreeView) {
+        var index = GameComponentsLookup.Tree;
+        var component = (TreeComponent)CreateComponent(index, typeof(TreeComponent));
+        component.TreeView = newTreeView;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveAgent() {
-        RemoveComponent(GameComponentsLookup.Agent);
+    public void RemoveTree() {
+        RemoveComponent(GameComponentsLookup.Tree);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherAgent;
+    static Entitas.IMatcher<GameEntity> _matcherTree;
 
-    public static Entitas.IMatcher<GameEntity> Agent {
+    public static Entitas.IMatcher<GameEntity> Tree {
         get {
-            if (_matcherAgent == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Agent);
+            if (_matcherTree == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Tree);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherAgent = matcher;
+                _matcherTree = matcher;
             }
 
-            return _matcherAgent;
+            return _matcherTree;
         }
     }
 }

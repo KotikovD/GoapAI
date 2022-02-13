@@ -1,4 +1,7 @@
-﻿using Entitas;
+﻿using System.Linq;
+using Entitas;
+using Entitas.Unity;
+using Entitas.VisualDebugging.Unity;
 using UnityEngine;
 
 
@@ -33,14 +36,31 @@ public class InitializeInputSystem : IInitializeSystem
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out var hit, RAY_DISTANCE))
-            _inputEntity.ReplaceInputClick(hit.point);
+        {
+            var entityComponent = hit.collider.gameObject.GetComponent<EntityLink>();
+            if(entityComponent != null)
+            {
+                ClearUi();
+                var gameEntity = (GameEntity) entityComponent.entity;
+                gameEntity.isDisplayedGameUi = true;
+                _inputEntity.ReplaceInputClick(gameEntity);
+            }
+        }
         else
+        {
             Debug.LogError("Raycast doesn't get anything");
+        }
         
     }
 
     private void ClearUi()
     {
+        var displayed = _context.GetGroup(GameMatcher.DisplayedGameUi).GetEntities();
+        foreach (var one in displayed)
+        {
+            one.isDisplayedGameUi = false;
+        }
+        
         _context.gameUi.View.ClearAgentView();
     }
 }

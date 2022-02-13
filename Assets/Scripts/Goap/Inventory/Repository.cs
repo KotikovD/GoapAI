@@ -4,8 +4,15 @@ using UnityEngine;
 
 public abstract class Repository<TEnum> : IRepository<TEnum> where TEnum : System.Enum
 {
-    private readonly Dictionary<TEnum, ResourceGroup> _items = new Dictionary<TEnum, ResourceGroup>();
-        
+    private readonly Dictionary<TEnum, ResourceGroup> _items;
+    private readonly int _maxResourceCapacity;
+
+    protected Repository(int maxResourceCapacity)
+    {
+        _maxResourceCapacity = maxResourceCapacity;
+        _items = new Dictionary<TEnum, ResourceGroup>();
+    }
+    
     public void AddItem(TEnum tType, IRepositoryItem repository)
     {
         if (_items.ContainsKey(tType))
@@ -22,6 +29,11 @@ public abstract class Repository<TEnum> : IRepository<TEnum> where TEnum : Syste
     public bool IsEnoughItemCount(TEnum tType, int count)
     {
         return _items.ContainsKey(tType) && _items[tType].HasEnoughCount(count);
+    }
+    
+    public int GetResourceCount(TEnum tType)
+    {
+        return _items.ContainsKey(tType) ? _items[tType].TotalAmount : 0;
     }
 
     public IRepositoryItem GetItemNearby(TEnum tType, int count, Vector3 position)
@@ -55,5 +67,10 @@ public abstract class Repository<TEnum> : IRepository<TEnum> where TEnum : Syste
             resultString += resource.Key + " - " + resource.Value.TotalAmount + "\n";
 
         return string.IsNullOrEmpty(resultString) ? "Empty" : resultString;
+    }
+
+    public bool CanGetMoreResources(int resourceValue)
+    {
+       return _maxResourceCapacity >= GetBusyTotalAmount() + resourceValue;
     }
 }

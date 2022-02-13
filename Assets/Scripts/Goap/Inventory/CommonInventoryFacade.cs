@@ -4,17 +4,25 @@
 public sealed class CommonInventoryFacade
 {
     private readonly ResourceRepository _repository;
-    public CommonInventoryFacade()
+    
+    
+    public CommonInventoryFacade(int maxResourceCapacity)
     {
-        _repository = new ResourceRepository();
+        _repository = new ResourceRepository(maxResourceCapacity);
     }
     
-    public void AddItem(ResourceType tType, IRepositoryItem repository)
+    public void AddResource(ResourceType tType, IRepositoryItem repository)
     {
         _repository.AddItem(tType, repository);
     }
 
-    public bool RemoveItem(ResourceType tType, int count)
+    public bool HasResource(ResourceType tType, int count = 1)
+    {
+        var isEnough = _repository.IsEnoughItemCount(tType, count);
+        return isEnough;
+    }
+    
+    public bool RemoveResource(ResourceType tType, int count)
     {
         var isEnough = _repository.IsEnoughItemCount(tType, count);
 
@@ -24,7 +32,7 @@ public sealed class CommonInventoryFacade
         return isEnough;
     }
     
-    public bool GetItem(ResourceType tType, int count, out IRepositoryItem item)
+    public bool GetResource(ResourceType tType, int count, out IRepositoryItem item)
     {
         item = null;
         var isEnough = _repository.IsEnoughItemCount(tType, count);
@@ -35,6 +43,11 @@ public sealed class CommonInventoryFacade
         return isEnough;
     }
 
+    public int GetResourceCount(ResourceType tType)
+    {
+        return _repository.GetResourceCount(tType);
+    }
+    
     public int GetBusyTotalAmount()
     {
         return _repository.GetBusyTotalAmount();
@@ -44,5 +57,9 @@ public sealed class CommonInventoryFacade
     {
         return _repository.GetTotalAmountString();
     }
-    
+
+    public bool CanGetMoreResources(int resourceValue)
+    {
+        return _repository.CanGetMoreResources(resourceValue);
+    }
 }

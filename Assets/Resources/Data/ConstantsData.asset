@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: ConstantsData
   m_EditorClassIdentifier: 
   _loadType: 0
+  _worldState: 2
   _clickAreaErrorTolerance: 1
   _agentMaxResourceCapacity: 100
   _configs:
   - resourceType: 1
-    actionIntervalDelay: 1
+    actionIntervalDelay: 3
     resourceCountPerInterval: 5
-    resourceAmount: 100
-    resourcePlace: 2
-    requirementsForInteraction: 3
+    resourceAmount: 13
+    requirementsForInteraction: 0

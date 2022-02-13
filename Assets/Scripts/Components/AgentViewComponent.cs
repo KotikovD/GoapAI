@@ -1,7 +1,7 @@
 using Entitas;
 
 [Game]
-public sealed class AgentComponent : IComponent
+public sealed class AgentViewComponent : IComponent
 {
     public AgentView AgentView;
 }

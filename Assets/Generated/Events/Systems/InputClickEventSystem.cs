@@ -30,7 +30,7 @@ public sealed class InputClickEventSystem : Entitas.ReactiveSystem<GameEntity> {
             _listenerBuffer.Clear();
             _listenerBuffer.AddRange(e.inputClickListener.value);
             foreach (var listener in _listenerBuffer) {
-                listener.OnInputClick(e, component.ClickPoint);
+                listener.OnInputClick(e, component.ClickedGameEntity);
             }
         }
     }

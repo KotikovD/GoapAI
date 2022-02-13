@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: AgentsActionsData
   m_EditorClassIdentifier: Assembly-CSharp::AgentsActionsData
   _agentsActions:
-  - _actionName: CollectWood
+  - _actionName: GatherWood
     _preconditionGoals: 00000000
     _effectsGoals: 01000000
+    _difficultCost: 1
+  - _actionName: CollectResource
+    _preconditionGoals: 01000000
+    _effectsGoals: 02000000
     _difficultCost: 1

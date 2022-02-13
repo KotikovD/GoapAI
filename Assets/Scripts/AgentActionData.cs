@@ -18,4 +18,17 @@ public sealed class AgentActionData
     public int DifficultCost => _difficultCost;
     public string ActionName => _actionName;
 
+
+    public AgentActionData Clone()
+    {
+        var reuslt = new AgentActionData()
+        {
+            _actionName = _actionName,
+            _preconditionGoals = new List<GoalName>(_preconditionGoals),
+            _effectsGoals = new List<GoalName>(_effectsGoals),
+            _difficultCost = _difficultCost
+        };
+
+        return reuslt;
+    }
 }

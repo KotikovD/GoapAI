@@ -8,6 +8,9 @@ public class GoalData
     [SerializeField] 
     private GoalName _goalName;
     
+    [SerializeField] 
+    private AgentType _agentType = AgentType.Any;
+    
     [Tooltip("When this goal will use")] 
     [SerializeField] 
     private WorldState _state;
@@ -19,9 +22,10 @@ public class GoalData
 
     
     public WorldState State => _state;
+    public AgentType AgentType => _agentType;
 
     public Goal GetGoal()
     {
-        return new Goal(_goalName, _state, _importance);
+        return new Goal(_goalName, _state, _importance, _agentType);
     }
 }

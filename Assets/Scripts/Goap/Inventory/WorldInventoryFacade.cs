@@ -1,12 +1,13 @@
-﻿public sealed class WorldInventoryFacade
+﻿
+public sealed class WorldInventoryFacade
 {
     private readonly ResourceRepository _repository;
-    public WorldInventoryFacade()
+    public WorldInventoryFacade(int maxResourceCapacity)
     {
-        _repository = new ResourceRepository();
+        _repository = new ResourceRepository(maxResourceCapacity);
     }
     
-    public void AddItem(ResourceType tType, IRepositoryItem repository)
+    public void AddResource(ResourceType tType, IRepositoryItem repository)
     {
         _repository.AddItem(tType, repository);
     }

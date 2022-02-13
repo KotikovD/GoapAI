@@ -8,63 +8,78 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Agent = 0;
-    public const int Camera = 1;
-    public const int CantCarryMore = 2;
-    public const int CommonInventory = 3;
-    public const int CommonView = 4;
-    public const int DataService = 5;
-    public const int FreeInteractionPoint = 6;
-    public const int GameUi = 7;
-    public const int InputClick = 8;
-    public const int InputClickListener = 9;
-    public const int Input = 10;
-    public const int NeedUpdateGameUi = 11;
-    public const int PlayerBase = 12;
-    public const int ResourceGetter = 13;
-    public const int ResourceMining = 14;
-    public const int ResourceSetter = 15;
-    public const int WorldInventory = 16;
+    public const int AgentAction = 0;
+    public const int AgentView = 1;
+    public const int Camera = 2;
+    public const int CantCarryMore = 3;
+    public const int CommonInventory = 4;
+    public const int CommonView = 5;
+    public const int DataService = 6;
+    public const int DisplayedGameUi = 7;
+    public const int FreeInteractionPoint = 8;
+    public const int GameUi = 9;
+    public const int InputClick = 10;
+    public const int InputClickListener = 11;
+    public const int Input = 12;
+    public const int InteractionEntity = 13;
+    public const int NeedUpdateGameUi = 14;
+    public const int PlayerBase = 15;
+    public const int ResourceGetter = 16;
+    public const int ResourceMining = 17;
+    public const int ResourceSetter = 18;
+    public const int Transaction = 19;
+    public const int Tree = 20;
+    public const int WorldInventory = 21;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 22;
 
     public static readonly string[] componentNames = {
-        "Agent",
+        "AgentAction",
+        "AgentView",
         "Camera",
         "CantCarryMore",
         "CommonInventory",
         "CommonView",
         "DataService",
+        "DisplayedGameUi",
         "FreeInteractionPoint",
         "GameUi",
         "InputClick",
         "InputClickListener",
         "Input",
+        "InteractionEntity",
         "NeedUpdateGameUi",
         "PlayerBase",
         "ResourceGetter",
         "ResourceMining",
         "ResourceSetter",
+        "Transaction",
+        "Tree",
         "WorldInventory"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(AgentComponent),
+        typeof(AgentActionComponent),
+        typeof(AgentViewComponent),
         typeof(CameraComponent),
         typeof(CantCarryMoreComponent),
         typeof(CommonInventoryComponent),
         typeof(CommonViewComponent),
         typeof(DataServiceComponent),
+        typeof(DisplayedGameUiComponent),
         typeof(FreeInteractionPoint),
         typeof(GameUiComponent),
         typeof(InputClickComponent),
         typeof(InputClickListenerComponent),
         typeof(InputComponent),
+        typeof(InteractionEntity),
         typeof(NeedUpdateGameUiComponent),
         typeof(PlayerBaseComponent),
         typeof(ResourceGetterComponent),
         typeof(ResourceMiningComponent),
         typeof(ResourceSetterComponent),
+        typeof(TransactionComponent),
+        typeof(TreeComponent),
         typeof(WorldInventoryComponent)
     };
 }

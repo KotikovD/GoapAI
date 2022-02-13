@@ -27,7 +27,7 @@ public sealed class ReactiveUpdateWorldInventorySystem : ReactiveSystem<GameEnti
         foreach (var entity in inventoryEnity.resourceSetter.Items)
         {
             var resource = new RepositoryItem(entity.Value, () => _context.playerBase.PlayerBaseView.InteractionPoint);
-            _context.worldInventory.Inventory.AddItem(entity.Key, resource);
+            _context.worldInventory.Inventory.AddResource(entity.Key, resource);
         }
         
         inventoryEnity.RemoveResourceSetter();

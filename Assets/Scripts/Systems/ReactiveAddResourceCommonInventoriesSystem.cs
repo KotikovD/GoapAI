@@ -26,10 +26,10 @@ public sealed class ReactiveAddResourceCommonInventoriesSystem : ReactiveSystem<
         {
             foreach (var res in entity.resourceSetter.Items)
             {
-                if(entity.commonInventory.MaxResourceCapacity > entity.commonInventory.Inventory.GetBusyTotalAmount() + res.Value)
+                if(entity.commonInventory.Inventory.CanGetMoreResources(res.Value))
                 {
                     var resource = new RepositoryItem(res.Value, () => _context.playerBase.PlayerBaseView.GetPosition);
-                    entity.commonInventory.Inventory.AddItem(res.Key, resource);
+                    entity.commonInventory.Inventory.AddResource(res.Key, resource);
                 }
                 else
                 {

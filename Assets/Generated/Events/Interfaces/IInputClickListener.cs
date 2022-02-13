@@ -7,5 +7,5 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public interface IInputClickListener {
-    void OnInputClick(GameEntity entity, UnityEngine.Vector3 clickPoint);
+    void OnInputClick(GameEntity entity, GameEntity clickedGameEntity);
 }
