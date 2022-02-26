@@ -14,15 +14,15 @@ public sealed class GoalsManager
         _constants = context.dataService.value.Constants;
     }
     
-    public List<Goal> GetGoals(List<GoalName> goalName)
+    public List<Goal> GetGoals(List<GoalPair> goalName)
     {
         var goals = goalName.Select(GetGoal).ToList();
         return goals;
     }
     
-    public Goal GetGoal(GoalName goalName)
+    public Goal GetGoal(GoalPair goalPair)
     {
-        var goal = _currentGoals.Find(x => x.GoalName == goalName);
+        var goal = _currentGoals.Find(x => x.GoalName == goalPair.GoalName);
         return goal;
     }
 

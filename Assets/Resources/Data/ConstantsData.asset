@@ -15,7 +15,7 @@ MonoBehaviour:
   _loadType: 0
   _worldState: 2
   _clickAreaErrorTolerance: 1
-  _agentMaxResourceCapacity: 100
+  _agentMaxResourceCapacity: 11
   _configs:
   - resourceType: 1
     actionIntervalDelay: 3

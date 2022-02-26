@@ -65,7 +65,7 @@ public sealed class ActionPlanner
         var foundPath = false;
         foreach (var action in achievableActions)
         {
-            if (action.IsAchieved(parent.Goals))
+            if (action.CouldBeAchieved(parent.Goals))
             {
                 var actionEffectsGoals = _goalsManager.GetGoals(action.EffectsGoalsNames);
                 var currentGoals = parent.Goals.Union(actionEffectsGoals).ToList();

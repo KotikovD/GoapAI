@@ -6,10 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = @"GameData/GoalsData")]
 public sealed class GoalsData : ScriptableObject
 {
-    [SerializeField] private List<GoalData> _goals;
+    [SerializeField] private List<WorldGoalData> _goals;
 
 
-    public List<GoalData> GetGoalsData(WorldState state)
+    public List<WorldGoalData> GetGoalsData(WorldState state)
     {
         var goalsData = _goals.FindAll(x => x.State == state);
 

@@ -1,42 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class AgentAction
+public abstract class AgentAction : IAgentAction
 {
-    private readonly string _actionName;
-    private readonly List<GoalName> _preconditionGoalsNames;
-    private readonly List<GoalName> _effectsGoalsNames;
-    private readonly int _difficultCost;
+    private string _actionName;
+    private List<GoalPair> _preconditionGoals;
+    private List<GoalPair> _effectsGoalsNames;
+    private int _difficultCost;
 
     
-    protected AgentAction(AgentActionData actionsData)
+    public void Init(string actionName, 
+        List<GoalPair> preconditionGoals, 
+        List<GoalPair> effectsGoals, 
+        int difficultCost)
     {
-        _actionName = actionsData.ActionName;
-        _preconditionGoalsNames = actionsData.PreconditionGoals;
-        _effectsGoalsNames = actionsData.EffectsGoals;
-        _difficultCost = actionsData.DifficultCost;
+        _actionName = actionName;
+        _preconditionGoals = preconditionGoals;
+        _effectsGoalsNames = effectsGoals;
+        _difficultCost = difficultCost;
     }
 
     public string ActionName => _actionName;
 
-    public List<GoalName> PreconditionGoalsNames => _preconditionGoalsNames;
+    public List<GoalPair> PreconditionGoals => _preconditionGoals;
 
-    public List<GoalName> EffectsGoalsNames => _effectsGoalsNames;
+    public List<GoalPair> EffectsGoalsNames => _effectsGoalsNames;
 
     public int DifficultCost => _difficultCost;
 
     public bool IsRunning { get; set; }
 
-    public bool IsAchieved(List<Goal> conditions)
+    public bool CouldBeAchieved(List<Goal> conditions)
     {
-        if (!_preconditionGoalsNames.Any() || _preconditionGoalsNames.Count == 1 && _preconditionGoalsNames.First() == GoalName.None)
+        if (!_preconditionGoals.Any() || _preconditionGoals.Count == 1 && _preconditionGoals.First().GoalName == GoalName.None)
             return true;
         
-        foreach (var preconditionGoal in _preconditionGoalsNames)
+        foreach (var preconditionGoal in _preconditionGoals)
         {
-            if (conditions.Any(x => x.GoalName == preconditionGoal))
+            if (conditions.Any(x => x.GoalName == preconditionGoal.GoalName))
                 return true;
         }
         
@@ -67,7 +69,7 @@ public abstract class AgentAction
     {
         return CanPerform(gameEntities, agent, out GameEntity actionEntity);
     }
-    
+
     public abstract bool CanPerform(List<GameEntity> gameEntities, GameEntity agent, out GameEntity actionEntity);
     public abstract void ProducePerform(GameEntity agent);
 

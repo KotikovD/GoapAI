@@ -6,10 +6,6 @@ namespace Goap.Actions
 {
     public sealed class GatherWood : AgentAction
     {
-        public GatherWood(AgentActionData actionData) : base(actionData)
-        {
-        }
-
         public override bool CanPerform(List<GameEntity> gameEntities, GameEntity agent, out GameEntity actionEntity)
         {
             actionEntity = null;

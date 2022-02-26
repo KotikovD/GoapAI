@@ -1,24 +1,25 @@
-﻿using System;
-
-public sealed class Goal
+﻿public sealed class Goal
 {
     private readonly GoalName _goalName;
     private readonly WorldState _state;
     private readonly int _importance;
     private readonly AgentType _agentType;
+    private readonly int _count;
     
-    public Goal(GoalName goalName, WorldState state, int importance, AgentType agentType)
+    public Goal(GoalName goalName, WorldState state, int importance, AgentType agentType, int count)
     {
         _goalName = goalName;
         _state = state;
         _importance = importance;
         _agentType = agentType;
+        _count = count;
     }
 
     public GoalName GoalName => _goalName;
     public AgentType AgentType => _agentType;
     public WorldState State => _state;
     public int Importance => _importance;
+    public int Count => _count;
 
     public bool Equals(Goal other)
     {

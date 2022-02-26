@@ -6,7 +6,7 @@ using UnityEngine;
 
 public sealed class GoapAgentsController
 {
-    private readonly AgentActionsKeeper _agentActionsKeeper;
+    private readonly AgentActionsCollectionBase _agentActionsCollectionBase;
     private readonly GoalsManager _goalsManager;
     private readonly ActionPlanner _actionPlanner;
     private readonly GameContext _context;
@@ -18,7 +18,7 @@ public sealed class GoapAgentsController
     {
         _context = context;
         _goalsManager = new GoalsManager(context);
-        _agentActionsKeeper = new AgentActionsCollection(context);
+        _agentActionsCollectionBase = new AgentActionsCollection(context);
         _actionPlanner = new ActionPlanner(_goalsManager);
     }
 
@@ -117,14 +117,14 @@ public sealed class GoapAgentsController
         if (agentEntity.agentAction.ActionQueue != null && agentEntity.agentAction.ActionQueue.Count > 0)
             return;
         
-        var achievableActions = _agentActionsKeeper.GetAchievableActions();
-        if (_actionPlanner.GetActionsPlan(achievableActions, agentEntity.agentAction.Goal, out var actionsQueue))
+        var actions = _agentActionsCollectionBase.GetActions;
+        if (_actionPlanner.GetActionsPlan(actions, agentEntity.agentAction.Goal, out var actionsQueue))
         {
             agentEntity.agentAction.ActionQueue = actionsQueue;
         }
         else
         {
-            Debug.LogError("No plan for goal = " + agentEntity.agentAction.Goal);
+            Debug.LogError("No plan for goal = " + agentEntity.agentAction.Goal.GoalName);
         }
     }
 
