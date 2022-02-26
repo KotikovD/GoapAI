@@ -69,8 +69,8 @@ public abstract class Repository<TEnum> : IRepository<TEnum> where TEnum : Syste
         return string.IsNullOrEmpty(resultString) ? "Empty" : resultString;
     }
 
-    public bool CanGetMoreResources(int resourceValue)
+    public int GetFreeCapacity()
     {
-       return _maxResourceCapacity >= GetBusyTotalAmount() + resourceValue;
+        return _maxResourceCapacity - GetBusyTotalAmount();
     }
 }

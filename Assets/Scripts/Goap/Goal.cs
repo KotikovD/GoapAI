@@ -5,7 +5,7 @@ public sealed class Goal
     private readonly GoalName _goalName;
     private readonly WorldState _state;
     private readonly int _importance;
-    private AgentType _agentType;
+    private readonly AgentType _agentType;
     
     public Goal(GoalName goalName, WorldState state, int importance, AgentType agentType)
     {

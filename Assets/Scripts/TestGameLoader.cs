@@ -4,10 +4,6 @@ using System.Linq;
 using Entitas.Unity;
 using UnityEngine;
 
-
-
-
-
 public class TestGameLoader : IGameLoader
 {
     private readonly GameContext _context;

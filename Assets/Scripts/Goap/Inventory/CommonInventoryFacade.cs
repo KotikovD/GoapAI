@@ -63,8 +63,9 @@ public sealed class CommonInventoryFacade
         return _repository.GetTotalAmountString();
     }
 
-    public bool CanGetMoreResources(int resourceValue)
+    public bool HasAnyCapacity(out int freeCapacity)
     {
-        return _repository.CanGetMoreResources(resourceValue);
+        freeCapacity = _repository.GetFreeCapacity();
+        return freeCapacity > 0;
     }
 }

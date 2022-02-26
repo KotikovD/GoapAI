@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 public sealed class ReactiveAddResourceCommonInventoriesSystem : ReactiveSystem<GameEntity>
 {
@@ -26,9 +27,16 @@ public sealed class ReactiveAddResourceCommonInventoriesSystem : ReactiveSystem<
         {
             foreach (var res in entity.resourceSetter.Items)
             {
-                if(entity.commonInventory.Inventory.CanGetMoreResources(res.Value))
+                if(entity.commonInventory.Inventory.HasAnyCapacity(out int freeCapacity))
                 {
                     var resource = new RepositoryItem(res.Value, () => _context.playerBase.PlayerBaseView.GetPosition);
+
+                    if(resource.Count > freeCapacity)
+                    {
+                        Debug.LogError($"Resource count bigger than free space in inventory. Put {freeCapacity} instead of {resource.Count}");
+                        resource.Count = freeCapacity;
+                    }
+                    
                     entity.commonInventory.Inventory.AddResource(res.Key, resource);
                 }
                 else

@@ -26,7 +26,7 @@ namespace Goap.Actions
                 var requirementsForInteraction = actionEntity.resourceMining.RequirementsForInteraction;
                 var hasItem = requirementsForInteraction == ResourceType.None || agent.commonInventory.Inventory.HasResource(requirementsForInteraction);
                 var hasAnyMore = actionEntity.commonInventory.Inventory.HasAnyResource(actionEntity.resourceMining.MiningResourceType);
-                var canGetMore = agent.commonInventory.Inventory.CanGetMoreResources(actionEntity.resourceMining.ResourceCountPerInterval);
+                var canGetMore = agent.commonInventory.Inventory.HasAnyCapacity(out int freeCapacity);
 
                 if (hasItem && hasAnyMore && canGetMore)
                     return true;

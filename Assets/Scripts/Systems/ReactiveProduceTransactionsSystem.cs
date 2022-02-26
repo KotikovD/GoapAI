@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas;
 
@@ -30,6 +31,11 @@ public sealed class ReactiveProduceTransactionsSystem : ReactiveSystem<GameEntit
             
             var resourceCount = entity.commonInventory.Inventory.GetResourceCount(transaction.ResourceType);
             var transactionCount = resourceCount < transaction.ResourceCount ? resourceCount : transaction.ResourceCount;
+
+            if (!transaction.To.commonInventory.Inventory.HasAnyCapacity(out int freeCapacity))
+                throw new Exception("Bad transaction. \"TO\" inventory hasn't free capacity");
+            
+            transactionCount = transactionCount > freeCapacity ? freeCapacity : transactionCount;
             
             inventory.GetResource(transaction.ResourceType, transactionCount, out var item);
             transaction.To.commonInventory.Inventory.AddResource(transaction.ResourceType, item);
