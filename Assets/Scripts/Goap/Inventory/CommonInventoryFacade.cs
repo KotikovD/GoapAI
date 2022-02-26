@@ -48,6 +48,11 @@ public sealed class CommonInventoryFacade
         return _repository.GetResourceCount(tType);
     }
     
+    public bool HasAnyResource(ResourceType tType)
+    {
+        return _repository.GetResourceCount(tType) > 0;
+    }
+    
     public int GetBusyTotalAmount()
     {
         return _repository.GetBusyTotalAmount();

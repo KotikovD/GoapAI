@@ -4,7 +4,7 @@ using RSG;
 using UnityEngine;
 
 
-public sealed class GoapAgentsController //TODO embed in systems
+public sealed class GoapAgentsController
 {
     private readonly AgentActionsKeeper _agentActionsKeeper;
     private readonly GoalsManager _goalsManager;
@@ -26,9 +26,9 @@ public sealed class GoapAgentsController //TODO embed in systems
     {
         foreach (var agentEntity in AgentEntities)
         {
-            TryAddAgentAction(agentEntity);
-            TrySetNewGoalForAgent(agentEntity);
-            TryCreateActionsQueue(agentEntity);
+            AddAgentAction(agentEntity);
+            SetNewGoalForAgent(agentEntity);
+            CreateActionsQueue(agentEntity);
             TryProduceActionsQueue(agentEntity);
         }
     }
@@ -45,15 +45,25 @@ public sealed class GoapAgentsController //TODO embed in systems
             return;
 
         agentAction.CurrentAction = actionsQueue.Dequeue();
-        if (agentAction.CurrentAction.PrePerform(GameEntities, agentEntity))
+        if (agentAction.CurrentAction.CanPerform(GameEntities, agentEntity, out var actionEntity))
         {
+            agentEntity.agentAction.ActionEntity = actionEntity;
             agentAction.CurrentAction.IsRunning = true;
+
             GoToActionInteractionPoint(agentEntity)
-                .Then(TryCompletePerform)
-                .Then(isComplete =>
+                .Then(() =>
                 {
-                    if (!isComplete)
-                        DisposeCurrentAction(agentAction);
+                    if (CanInteractWithActionEntity(agentEntity) &&
+                        agentAction.CurrentAction.CanPerform(GameEntities, agentEntity))
+                    {
+                        agentEntity.agentAction.ActionEntity.isFreeInteractionPoint = false;
+
+                        return ProducePerform(agentEntity)
+                            .Then(() => agentEntity.agentAction.ActionEntity.isFreeInteractionPoint = true);
+                    }
+
+                    DisposeCurrentAction(agentAction);
+                    return Promise.Resolved();
                 });
         }
         else
@@ -61,29 +71,14 @@ public sealed class GoapAgentsController //TODO embed in systems
             DisposeCurrentAction(agentAction);
         }
     }
-
-    private IPromise<bool> TryCompletePerform(GameEntity agent)
-    {
-        var promise = new Promise<bool>();
-
-        if (CheckInteractionEntity(agent))
-        {
-            agent.agentAction.ActionEntity.isFreeInteractionPoint = false;
-            CompletePerform(agent).Then(() =>
-            {
-                agent.agentAction.ActionEntity.isFreeInteractionPoint = true;
-                promise.Resolve(true);
-            });
-        }
-        else
-        {
-            promise.Resolve(false);
-        }
-      
-        
-        return promise;
-    }
     
+    private bool CanInteractWithActionEntity(GameEntity agentEntity)
+    {
+        var isAchievable = agentEntity.agentAction.CurrentAction.IsAchievable();
+        var canUse = agentEntity.agentAction.ActionEntity.isFreeInteractionPoint;
+        return canUse && isAchievable;
+    }
+
     private void DisposeCurrentAction(AgentActionComponent agentAction)
     {
         agentAction.ActionQueue.Clear();
@@ -92,43 +87,32 @@ public sealed class GoapAgentsController //TODO embed in systems
         agentAction.CurrentAction = null;
     }
     
-    private IPromise<GameEntity> GoToActionInteractionPoint(GameEntity agentEntity)
+    private IPromise GoToActionInteractionPoint(GameEntity agentEntity)
     {
-        var promise = new Promise<GameEntity>();
+        var promise = new Promise();
         var destination = agentEntity.agentAction.ActionEntity.commonView.CommonView.InteractionPoint;
         
         agentEntity.agentView.AgentView.Move(destination)
-            .Then(() => promise.Resolve(agentEntity));
+            .Then(() => promise.Resolve());
 
-        return promise;
-    }
-
-    private bool CheckInteractionEntity(GameEntity agentEntity)
-    {
-        var isAchievable = agentEntity.agentAction.CurrentAction.IsAchievable();
-        var canUse = agentEntity.agentAction.ActionEntity.isFreeInteractionPoint;
-        return canUse && isAchievable;
-    }
-
-    private IPromise CompletePerform(GameEntity agentEntity)
-    {
-        var promise = new Promise();
-        var agentAction = agentEntity.agentAction;
-        Debug.Log("1 CompletePerform");
-        
-        PromiseTimerUtil.ResolveIn(agentEntity.agentAction.ActionEntity.resourceMining.ActionIntervalDelay)
-            .Then(() =>
-            {
-                agentAction.CurrentAction.CompletePerform(agentEntity);
-                agentAction.CurrentAction.IsRunning = false;
-                Debug.Log("2 CompletePerform");
-                promise.Resolve();
-            });
-        
         return promise;
     }
     
-    private void TryCreateActionsQueue(GameEntity agentEntity)
+    private IPromise ProducePerform(GameEntity agentEntity)
+    {
+        var agentAction = agentEntity.agentAction;
+        Debug.Log("1 CompletePerform");
+
+        return PromiseTimerUtil.ResolveIn(agentEntity.agentAction.ActionEntity.resourceMining.ActionIntervalDelay)
+            .Then(() =>
+            {
+                agentAction.CurrentAction.ProducePerform(agentEntity);
+                agentAction.CurrentAction.IsRunning = false;
+                Debug.Log("2 CompletePerform");
+            });
+    }
+    
+    private void CreateActionsQueue(GameEntity agentEntity)
     {
         if (agentEntity.agentAction.ActionQueue != null && agentEntity.agentAction.ActionQueue.Count > 0)
             return;
@@ -144,7 +128,7 @@ public sealed class GoapAgentsController //TODO embed in systems
         }
     }
 
-    private void TrySetNewGoalForAgent(GameEntity agentEntity)
+    private void SetNewGoalForAgent(GameEntity agentEntity)
     {
         if (agentEntity.agentAction.Goal != null)
             return;
@@ -153,7 +137,7 @@ public sealed class GoapAgentsController //TODO embed in systems
         agentEntity.agentAction.Goal = goalForAgent;
     }
 
-    private void TryAddAgentAction(GameEntity agentEntity)
+    private void AddAgentAction(GameEntity agentEntity)
     {
         if (agentEntity.hasAgentAction)
             return;

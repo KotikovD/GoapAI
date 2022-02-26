@@ -66,8 +66,13 @@ public abstract class AgentAction
         return closestEntity != null;
     }
 
-    public abstract bool PrePerform(List<GameEntity> gameEntities, GameEntity agent);
-    public abstract void CompletePerform(GameEntity agent);
+    public bool CanPerform(List<GameEntity> gameEntities, GameEntity agent)
+    {
+        return CanPerform(gameEntities, agent, out GameEntity actionEntity);
+    }
+    
+    public abstract bool CanPerform(List<GameEntity> gameEntities, GameEntity agent, out GameEntity actionEntity);
+    public abstract void ProducePerform(GameEntity agent);
 
     public virtual bool IsAchievable()
     {
